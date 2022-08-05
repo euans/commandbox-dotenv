@@ -8,14 +8,16 @@ component {
 			"printOnLoad" = false,
 			"verbose" = false,
 			"checkEnvPreServerStart" = true,
-			"legacyLoadToServerJVMArgs" = true
+			"legacyLoadToServerJVMArgs" = true,
+			"encryptionProfile" = "default",
+			"encryptionKey" = ""
 		};
 
 		interceptors = [
 			{ class = "#moduleMapping#.interceptors.LoadEnvForCommands" },
 			{ class = "#moduleMapping#.interceptors.LoadEnvForServers" },
 			{ class = "#moduleMapping#.interceptors.LoadEnvPreServers" },
-			{ class = "#moduleMapping#.interceptors.LoadEnvForShell" },
+			{ class = "#moduleMapping#.interceptors.LoadEnvForShell" }
 		];
 	}
 

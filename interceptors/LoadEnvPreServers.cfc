@@ -38,6 +38,7 @@ component {
 		var serverinfo = arguments.interceptData.serverDetails.serverInfo;
         
 		var serverEnvFile = "";
+		var serverEncryptionProfile = moduleSettings.encryptionProfile;
 		// First look for a server.defaults config setting
 		if ( defaults.keyExists( "dotenvFile" ) && len( defaults.dotenvFile ) ) {
 			serverEnvFile = defaults.dotenvFile.listMap( ( f ) => variables.fileSystemUtil.resolvePath( f, webRoot ) );
@@ -53,6 +54,10 @@ component {
         	return;
         }
         
+        if ( serverJSON.keyExists( "dotenvEncryptionProfile" ) && len( serverJSON.dotenvEncryptionProfile ) ) {
+        	serverEncryptionProfile = serverJSON.dotenvEncryptionProfile;
+        }
+consoleLogger.info( "commandbox-dotenv: #serverEncryptionProfile#" );
 		variables.wirebox.getInstance( "Globber" )
 			.setPattern( serverEnvFile )
 			.apply( ( f ) => {
@@ -65,7 +70,8 @@ component {
 					variables.consoleLogger.info( "commandbox-dotenv: loading server dotenvFile from [#f#]" );
 				}
 				variables.envFileService.loadEnvToCLI(
-					envStruct = variables.envFileService.getEnvStruct( serverEnvFile )
+					envStruct = variables.envFileService.getEnvStruct( serverEnvFile ),
+					encryptionProfile = serverEncryptionProfile
 				);
 			} );
 	}
